@@ -17,6 +17,24 @@ def get_images():
     for file in all_files_in_load:  # loop through the files
         if file[-3:] == 'jpg':  # if it's an image, add it to the image_files array
             image_files.append(file)
+        else:
+            os.rename(LOAD_DIR + file, FAILED_DIR + file)  # If it's not an image, it fails
+
+
+def get_new_name(original_name):
+    y_or_n = ['y', 'n']
+    while change not in y_or_n:
+        change = input('Would you like all images to have the same name? [y|n]: ').lower()
+
+    if change == 'y':
+        confirm = 'n'
+        while confirm != 'y':
+            name_input = input('What would you like to name the images? ')
+            print(f'You entered \"{name_input}\". The images will be named like this: \"2022-07-13_{name_input}.\"')
+            confirm = input('Is this correct? [y|n]: ').lower()
+        return name_input
+    else:
+        return original_name
 
 
 def get_formatted_date_string_from_image(jpg):
