@@ -61,21 +61,37 @@ get_images()
 
 # see if the user wants to use a new name
 custom_name = get_custom_name()
+
+# dictionary to hold the dates to make sure the same name doesnt get made twice
+date_dict = {}
+
 # loop through the images and convert the names
-for file in image_files:
+for original_file_name in image_files:
     try:
-        image = Image.open(LOAD_DIR + file)  # get the image object from the file
+        image = Image.open(LOAD_DIR + original_file_name)  # get the image object from the file
     except:
-        print(f'{file} is not a jpeg. Moved to failed folder.')
-        os.rename(LOAD_DIR + file, FAILED_DIR + file)  # move the file to the failed directory
+        print(f'{original_file_name} is not a jpg. Moved to failed folder.')
+        os.rename(LOAD_DIR + original_file_name, FAILED_DIR + original_file_name)  # move the file to the failed dir
         continue
     try:
         date = get_formatted_date_string_from_image(image)
     except:
-        print(f'Date not found for this image: {file}.')
-        os.rename(LOAD_DIR + file, FAILED_DIR + file)  # move the file to the failed directory
+        print(f'Date not found for this image: {original_file_name}.')
+        date = 'earlier'
         continue
 
-    filtered_name = drop_default_date_if_found(file)
-    new_name = f'{date}_{filtered_name}'
-    os.rename(LOAD_DIR + file, MODIFIED_DIR + new_name)  # move the file to the modified directory
+    if custom_name == 'no':
+        new_name = drop_default_date_if_found(original_file_name)
+    else:
+        new_name = custom_name
+
+    if date not in date_dict:
+        date_dict[date] = [1]
+        final_name = f'{date}_{new_name}.jpg'
+        os.rename(LOAD_DIR + original_file_name, MODIFIED_DIR + final_name)  # move the file to the modified directory
+    else:
+        count = date_dict[date].count() + 1
+        final_name = f'{date}_{new_name}({count}).jpg'
+        date_dict[date].append(count)
+        os.rename(LOAD_DIR + original_file_name, MODIFIED_DIR + final_name)  # move the file to the modified directory
+
