@@ -21,3 +21,10 @@ into the "load" folder
 folder
 4. If any photos were unsuccessful, they will be in 
 the "failed" folder
+### New Functionality
+1. Ask the user if they would like to name all the files
+the same.
+2. If they answer yes, prompt the user for the new name
+- **This will allow the user to put all the images of 
+one person in the load folder, then name them the same name.
+For instance: "2022_07-13_James"**
