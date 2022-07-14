@@ -19,5 +19,5 @@ into the "load" folder
 2. Run the script
 3. Remove your photos with the changed names from "modified"
 folder
-4. If any photos were unsuccessful, they will still be in 
-the "load" folder
+4. If any photos were unsuccessful, they will be in 
+the "failed" folder
