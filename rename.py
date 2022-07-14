@@ -21,8 +21,9 @@ def get_images():
             os.rename(LOAD_DIR + file, FAILED_DIR + file)  # If it's not an image, it fails
 
 
-def get_new_name(original_name):
+def get_custom_name():
     y_or_n = ['y', 'n']
+    change = ''
     while change not in y_or_n:
         change = input('Would you like all images to have the same name? [y|n]: ').lower()
 
@@ -34,7 +35,7 @@ def get_new_name(original_name):
             confirm = input('Is this correct? [y|n]: ').lower()
         return name_input
     else:
-        return original_name
+        return 'no'
 
 
 def get_formatted_date_string_from_image(jpg):
@@ -58,6 +59,8 @@ def drop_default_date_if_found(name):
 # get all images from the load folder
 get_images()
 
+# see if the user wants to use a new name
+custom_name = get_custom_name()
 # loop through the images and convert the names
 for file in image_files:
     try:
