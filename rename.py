@@ -25,7 +25,7 @@ def get_custom_name():
     y_or_n = ['y', 'n']
     change = ''
     while change not in y_or_n:
-        change = input('Would you like all images to have the same name? [y|n]: ').lower()
+        change = input('Would you like to rename all images to have the same name? [y|n]: ').lower()
 
     if change == 'y':
         confirm = 'n'
@@ -78,7 +78,6 @@ for original_file_name in image_files:
     except:
         print(f'Date not found for this image: {original_file_name}.')
         date = 'earlier'
-        continue
 
     if custom_name == 'no':
         new_name = drop_default_date_if_found(original_file_name)
@@ -90,7 +89,7 @@ for original_file_name in image_files:
         final_name = f'{date}_{new_name}.jpg'
         os.rename(LOAD_DIR + original_file_name, MODIFIED_DIR + final_name)  # move the file to the modified directory
     else:
-        count = date_dict[date].count() + 1
+        count = len(date_dict[date]) + 1
         final_name = f'{date}_{new_name}({count}).jpg'
         date_dict[date].append(count)
         os.rename(LOAD_DIR + original_file_name, MODIFIED_DIR + final_name)  # move the file to the modified directory
